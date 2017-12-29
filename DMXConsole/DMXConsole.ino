@@ -214,8 +214,8 @@ void PrintFixValue(int Data, int Fix)
 // With a Text Prompt
 int EnterValue(const char *Text, int Donnee, int Range)
 {
-  int tempo1;
-  int tempo2;
+  int ESCPressIN;
+  int OKPressIN;
   
   int OldEncDivider = EncDivider;
   EncDivider = 1;
@@ -253,11 +253,11 @@ int EnterValue(const char *Text, int Donnee, int Range)
       EncPulse=0;
     }
   }
-  while ((tempo1 = extendIn(ESC)) && (tempo2 =extendIn(OK)));
+  while ((ESCPressIN = extendIn(ESC)) && (OKPressIN =extendIn(OK)));
   EncDivider = OldEncDivider;
   
   interrupts();
-  if (!tempo2){
+  if (!OKPressIN){
     return (Donnee);
   }
   else {
