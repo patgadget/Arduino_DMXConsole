@@ -49,6 +49,9 @@ SoftwareSerial softserial(RxLCD, TxLCD);
 #define ESC 7
 
 
+#define myubrr (16000000L/16/250000-1)
+
+
 int tempStateIn=0;
 int lastState = 0;              //last state of led
 int EncValue = 0;
@@ -122,7 +125,7 @@ void setup()
   digitalWrite(TxLCD, HIGH);
   delay (100);
   softserial.begin(9600); // for LCD
-  Serial.begin(9600); //For DMX out
+  Serial.begin(250000); //For DMX out
   delay (100);
   //noInterrupts();
   softserial.write(22); // turn on LCD, No Cursor
@@ -132,9 +135,15 @@ void setup()
   softserial.print(" DMX Console Master");
   delay (500);
 
-  //  To Change speed to 250Kb and 2 stop bit
-  UBRR0L = 3;
-  UCSR0C = UCSR0C | 0x08;
+  //  To Change speed to 250Kb and 2 stop bit\
+
+  UBRR0H = (unsigned char)(myubrr>>8); //High part, only bit 0-3
+  UBRR0L = (unsigned char)myubrr; //Low part
+  //UCSR0B |= ((1<<RXEN0)|(1<<RXCIE0));//Enable Receiver and Interrupt RX
+  UCSR0C |= ((3<<UCSZ00)|(1<<USBS0)); //N81 No parity/8 bits/2 Stop bit
+  
+  //UBRR0L = 3;
+  //UCSR0C = UCSR0C | 0x08;
 
   randomSeed(analogRead(0));
   }
