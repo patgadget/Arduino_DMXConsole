@@ -669,6 +669,7 @@ void loop()
   }
   if (!extendInNotNow(ESC))
   {
+    // Each time pressing ESC Change Menu
     MenuIndex++;
     if (MenuIndex>4)
       MenuIndex=1;
@@ -682,6 +683,7 @@ void loop()
     clearDmxData();
     if (MenuIndex == 1)
     {
+      turnOffMenuLed();
       extendOut(OK_GREEN,HIGH); //OK GREEN LED ON
       temp = EnterValue("DMX Channel", DMXchannel, 512);
       if (temp != -1){
@@ -693,6 +695,7 @@ void loop()
         //dmx_data[DMXchannel] = temp;
         ModeNo =1;
       //}
+      turnOnGreenMenuLed();
       extendOut(OK_GREEN,LOW); //OK GREEN LED OFF
       }
     ScrollMenu(MenuIndex);
