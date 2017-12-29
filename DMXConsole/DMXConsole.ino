@@ -99,6 +99,8 @@ int pinto=0;
 // Interrupt of the rotary encoder wheel
 // It is call only on the rising edge of one of the 
 // two quadrature channel.
+// Going too fast while Serial Print to the LCD does not Work well
+
 void Rotary()
 {
   if (!digitalRead(EncCHB))
@@ -300,7 +302,7 @@ void ScrollMenu(int Menu)
 /*************************************************************/
 void loop()
 {
-  int temp;
+  int returnValue;
 
   if (full_dmx_channel == 0) //Make a break in serial
   {
@@ -685,9 +687,9 @@ void loop()
     {
       turnOffMenuLed();
       extendOut(OK_GREEN,HIGH); //OK GREEN LED ON
-      temp = EnterValue("DMX Channel", DMXchannel, 512);
-      if (temp != -1){
-        DMXchannel = temp;
+      returnValue = EnterValue("DMX Channel", DMXchannel, 512);
+      if (returnValue != -1){
+        DMXchannel = returnValue;
         while (!extendIn(OK));
         
         //temp = EnterValue("Channel Value", 0, 255);
@@ -737,9 +739,9 @@ void loop()
     clearDmxData();
     if (MenuIndex == 1)
     {
-      temp = EnterValue("Fixture", FixtureNO, 127);
-      if (temp != -1)
-        FixtureNO = temp;
+      returnValue = EnterValue("Fixture", FixtureNO, 127);
+      if (returnValue != -1)
+        FixtureNO = returnValue;
       
     ScrollMenu(MenuIndex);
     }
@@ -770,9 +772,9 @@ void loop()
     }
     if (MenuIndex == 2)
     {
-      temp = EnterValue("Sequence", SequenceNO, 127);
-      if (temp != -1)
-        SequenceNO = temp;
+      returnValue = EnterValue("Sequence", SequenceNO, 127);
+      if (returnValue != -1)
+        SequenceNO = returnValue;
       ModeNo=7;
       ScrollMenu(MenuIndex);
     }
@@ -801,9 +803,9 @@ void loop()
     clearDmxData();
     if (MenuIndex == 1)
     {
-      temp = EnterValue("Program", ProgramNO, 127);
-      if (temp != -1)
-        ProgramNO = temp;
+      returnValue = EnterValue("Program", ProgramNO, 127);
+      if (returnValue != -1)
+        ProgramNO = returnValue;
       ModeNo=4;
       ScrollMenu(MenuIndex);
 
