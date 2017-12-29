@@ -315,9 +315,13 @@ void loop()
     delayMicroseconds(12);
     UCSR0B = UCSR0B | 0x08;
     Serial.write(0x00);
+    //ModeNo=0;
   }
   if (full_dmx_channel>0) //Not a break then write the DMX Channel
     {
+    //dmx_data[full_dmx_channel]=255;  
+    //Serial.write(dmx_data[full_dmx_channel]);
+
       if (ModeNo == 1){
         Serial.write(dmx_data[full_dmx_channel]);
       }
@@ -355,6 +359,7 @@ void loop()
     readPot5=analogRead(4);
     readPot6=analogRead(5);
     digitalWrite(ledPin,1-digitalRead(ledPin));  //flash the LED to indicate refresh speed
+
     if (ModeNo == 1){
         dmx_data[DMXchannel]=(char)(readPot1/4);
         dmx_data[DMXchannel+1]=(char)(readPot2/4);
