@@ -162,14 +162,14 @@ void setup()
   Serial.begin(9600); //For DMX out
   delay (100);
   //noInterrupts();
-  softserial.print(22, BYTE); // turn on LCD, No Cursor
-  softserial.print(17, BYTE); // turn on back light
+  softserial.write(22); // turn on LCD, No Cursor
+  softserial.write(17)); // turn on back light
   delay (50);
-  softserial.print(12, BYTE); // Clear Screen
-  softserial.print(" DMX Console V1.4");
+  softserial.write(12); // Clear Screen
+  softserial.print(" DMX Console V1.5");
   delay (500);
   // For debug
-  //  softserial.print(0x0D, BYTE);
+  //  softserial.write(0x0D);
   //  softserial.print(TCCR2A, HEX);
 
   //  To Change speed to 250Kb and 2 stop bit
@@ -220,18 +220,18 @@ int EnterValue(const char *Text, int Donnee, int Range)
   int OldEncDivider = EncDivider;
   EncDivider = 1;
   noInterrupts();
-  softserial.print(12, BYTE); // Clear Screen
+  softserial.write(12); // Clear Screen
   softserial.print(Text);
-  softserial.print(0x0D, BYTE);
+  softserial.write(0x0D);
   //softserial.print("Current Value :");
   //PrintFixValue(Donnee,3);
-  softserial.print(0x0D, BYTE);
+  softserial.write(0x0D);
   softserial.print("Range : (0-");
   softserial.print(Range);
   softserial.print(")");
-  softserial.print(0x0D, BYTE);
+  softserial.write(0x0D);
   softserial.print("New Value :");
-  softserial.print(0xC7, BYTE);
+  softserial.write(0xC7);
   PrintFixValue(Donnee,3);
 
   do {
@@ -248,7 +248,7 @@ int EnterValue(const char *Text, int Donnee, int Range)
     }
     if (EncPulse) {
       noInterrupts();
-      softserial.print(0xC7, BYTE);
+      softserial.write(0xC7);
       PrintFixValue(Donnee, 3);
       EncPulse=0;
     }
@@ -272,7 +272,7 @@ int EnterValue(const char *Text, int Donnee, int Range)
 void ScrollMenu(int Menu)
 {
   noInterrupts();
-  softserial.print(0x80, BYTE); // Move Cursor to TOP LEFT
+  softserial.write(0x80); // Move Cursor to TOP LEFT
   if (Menu==1){
     softserial.print("1.DMX Channel       2.Fixture           3.Scene             4.Program           ");
     turnOffMenuLed();
@@ -324,31 +324,31 @@ void loop()
     digitalWrite(1,HIGH);
     delayMicroseconds(12);
     UCSR0B = UCSR0B | 0x08;
-    Serial.print(0x00, BYTE);
+    Serial.write(0x00);
   }
   if (full_dmx_channel>0) //Not a break then write the DMX Channel
     {
       if (ModeNo == 1){
-        Serial.print(dmx_data[full_dmx_channel],BYTE);
+        Serial.write(dmx_data[full_dmx_channel]);
       }
       else if (ModeNo == 2){
-        Serial.print(dmx_data[full_dmx_channel],BYTE);
+        Serial.write(dmx_data[full_dmx_channel]);
       }
       else if (ModeNo == 3){
-        Serial.print(dmx_data[full_dmx_channel],BYTE);
+        Serial.write(dmx_data[full_dmx_channel]);
       }
       else if (ModeNo == 4 || ModeNo == 7){
-          Serial.print(dmx_data[full_dmx_channel],BYTE);
+          Serial.write(dmx_data[full_dmx_channel]);
       }
       else if (ModeNo == 5){ // ALL ON mode
-        Serial.print((char)(readPot1/4),BYTE);
+        Serial.write((char)(readPot1/4));
       }
       else if (ModeNo == 6){ // ALL OFF MODE
-        Serial.print(0x00,BYTE); //send 0x00
+        Serial.write(0x00); //send 0x00
         dmx_data[full_dmx_channel]=0x00; // and clear the stream of residual
       }
       if (ModeNo == 10){
-        Serial.print(dmx_data[full_dmx_channel],BYTE);
+        Serial.write(dmx_data[full_dmx_channel]);
       }
     }
   full_dmx_channel++;
@@ -1044,4 +1044,3 @@ void clearDmxData()
     }
   }
 }
-
