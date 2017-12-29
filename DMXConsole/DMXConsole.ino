@@ -1,3 +1,4 @@
+// My DMX Console Have a Duemilanove (set Arduino before Transfert)
 #include <SoftwareSerial.h>
 
 // DMX Console
@@ -9,8 +10,6 @@
 // Analogue (0) Pot #1
 
 
-
-SoftwareSerial softserial(6, 5);
 #define RxLCD 6
 #define TxLCD 5
 #define ledPin 13                // choose the pin for the LED
@@ -23,7 +22,7 @@ SoftwareSerial softserial(6, 5);
 #define EncCHB 3                // choose the input pin (for a pushbutton)
 #define loadPin 4
 #define sInDataPin 6
-
+SoftwareSerial softserial(RxLCD, TxLCD);
 
 
 
