@@ -163,7 +163,7 @@ void setup()
   delay (100);
   //noInterrupts();
   softserial.write(22); // turn on LCD, No Cursor
-  softserial.write(17)); // turn on back light
+  softserial.write(17); // turn on back light
   delay (50);
   softserial.write(12); // Clear Screen
   softserial.print(" DMX Console V1.5");
