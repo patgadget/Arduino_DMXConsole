@@ -211,6 +211,7 @@ void PrintFixValue(int Data, int Fix)
 
 /*************************************************************/
 // To Enter a Value with the rotary wheel
+// With a Text Prompt
 int EnterValue(const char *Text, int Donnee, int Range)
 {
   int tempo1;
@@ -275,34 +276,22 @@ void ScrollMenu(int Menu)
   if (Menu==1){
     softserial.print("1.DMX Channel       2.Fixture           3.Scene             4.Program           ");
     turnOffMenuLed();
-    extendOut(TOP_LEFT_GREEN,HIGH);
-    extendOut(TOP_RIGHT_GREEN,HIGH);
-    extendOut(BOT_LEFT_GREEN,HIGH);
-    extendOut(BOT_RIGHT_GREEN,HIGH);
+    turnOnGreenMenuLed();
   }
   if (Menu==2){
     softserial.print("1.All ON DIM        2.All OFF           3.Sequence de Prog. 4.LASER             ");
     turnOffMenuLed();
-    extendOut(TOP_LEFT_GREEN,HIGH);
-    extendOut(TOP_RIGHT_GREEN,HIGH);
-    extendOut(BOT_LEFT_GREEN,HIGH);
-    extendOut(BOT_RIGHT_GREEN,HIGH);
+    turnOnGreenMenuLed();
   }
   if (Menu==3){
     softserial.print("1.RGB STEP          2.STROBE            3.RGB SMOOTH        4.FLASH             ");
     turnOffMenuLed();
-    extendOut(TOP_LEFT_GREEN,HIGH);
-    extendOut(TOP_RIGHT_GREEN,HIGH);
-    extendOut(BOT_LEFT_GREEN,HIGH);
-    extendOut(BOT_RIGHT_GREEN,HIGH);
+    turnOnGreenMenuLed();
   }
   if (Menu==4){
     softserial.print("1.XY MOVE RGB       2.POLICE            3.RANDOM            4.XY RANDOM         ");
     turnOffMenuLed();
-    extendOut(TOP_LEFT_GREEN,HIGH);
-    extendOut(TOP_RIGHT_GREEN,HIGH);
-    extendOut(BOT_LEFT_GREEN,HIGH);
-    extendOut(BOT_RIGHT_GREEN,HIGH);
+    turnOnGreenMenuLed();
   }
   interrupts();
   
@@ -351,7 +340,7 @@ void loop()
       }
     }
   full_dmx_channel++;
-  extendOut(9,HIGH); // Turn ON ESC LED GREEN
+  extendOut(ESC_GREEN,HIGH); // Turn ON ESC LED GREEN
   // At the end of the transmit of the full DMX trame
   if (full_dmx_channel>50)
     {
@@ -693,7 +682,7 @@ void loop()
     clearDmxData();
     if (MenuIndex == 1)
     {
-      extendOut(11,HIGH); //OK GREEN LED ON
+      extendOut(OK_GREEN,HIGH); //OK GREEN LED ON
       temp = EnterValue("DMX Channel", DMXchannel, 512);
       if (temp != -1){
         DMXchannel = temp;
@@ -704,7 +693,7 @@ void loop()
         //dmx_data[DMXchannel] = temp;
         ModeNo =1;
       //}
-      extendOut(11,LOW); //OK GREEN LED OFF
+      extendOut(OK_GREEN,LOW); //OK GREEN LED OFF
       }
     ScrollMenu(MenuIndex);
     }
@@ -1035,6 +1024,13 @@ void turnOffMenuLed()
 {
   for (int i=0;i<8;i++)
     extendOut(i,LOW);
+}
+
+void turnOnGreenMenuLed()
+{
+  for (int i=0;i<8;i++)
+    if (i%2)
+      extendOut(i,HIGH);
 }
 
 void clearDmxData()
