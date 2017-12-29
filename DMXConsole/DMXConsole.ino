@@ -351,6 +351,7 @@ void loop()
       }
     }
   full_dmx_channel++;
+  extendOut(9,HIGH); // Turn ON ESC LED GREEN
   // At the end of the transmit of the full DMX trame
   if (full_dmx_channel>50)
     {
@@ -692,6 +693,7 @@ void loop()
     clearDmxData();
     if (MenuIndex == 1)
     {
+      extendOut(11,HIGH); //OK GREEN LED ON
       temp = EnterValue("DMX Channel", DMXchannel, 512);
       if (temp != -1){
         DMXchannel = temp;
@@ -702,7 +704,7 @@ void loop()
         //dmx_data[DMXchannel] = temp;
         ModeNo =1;
       //}
-
+      extendOut(11,LOW); //OK GREEN LED OFF
       }
     ScrollMenu(MenuIndex);
     }
