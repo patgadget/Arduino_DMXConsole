@@ -118,18 +118,14 @@ void loop()
   if (full_dmx_channel == 0) //Make a break in serial
   {
     UCSR0B = UCSR0B & ~0x08; // Disable USART Transmit
-    //delayMicroseconds(120);
     pinMode(1, OUTPUT);
-    //digitalWrite(1,HIGH);
-    //delayMicroseconds(120);
     digitalWrite(1,LOW); // Low = Break
     delayMicroseconds(120);
     digitalWrite(1,HIGH);
     UCSR0B = UCSR0B | 0x08; // Enable USART Transmit
     Serial.write(0x00);
    }
-  //if (full_dmx_channel>0) //Not a break then write the DMX Channel
-  if (full_dmx_channel == 1) //Not a break then write the DMX Channel
+  if (full_dmx_channel>0) //Not a break then write the DMX Channel
     {
     Serial.write(0xF0);
     Serial.write(0x0F);
