@@ -125,12 +125,9 @@ void loop()
     UCSR0B = UCSR0B | 0x08; // Enable USART Transmit
     Serial.write(0x00);
    }
-  if (full_dmx_channel>0) //Not a break then write the DMX Channel
+  if (full_dmx_channel > 1) //Not a break then write the DMX Channel
     {
-    Serial.write(0xF0);
-    Serial.write(0x0F);
-    Serial.write(0x00);
-    Serial.write(0xFF);
+    Serial.write(analogRead(0)/4);
     }
   full_dmx_channel++;
   if (full_dmx_channel>5)
