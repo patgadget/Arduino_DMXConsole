@@ -12,7 +12,6 @@
 #define TxDMX 1
 #define RxLCD 6
 #define TxLCD 5
-#define ledPin 13                // choose the pin for the LED
 SoftwareSerial softserial(RxLCD, TxLCD);
 
 #define myubrr (16000000L/16/250000-1)
@@ -33,9 +32,7 @@ int readPot6;
 void setup()
 {
   pinMode(TxDMX, OUTPUT);
-  pinMode(ledPin, OUTPUT);      // declare LED as output
   pinMode(TxLCD, OUTPUT);
-
   digitalWrite(TxLCD, HIGH);
   delay (100);
   softserial.begin(9600); // for LCD
