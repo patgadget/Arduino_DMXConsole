@@ -14,9 +14,6 @@
 #define TxLCD 5
 SoftwareSerial softserial(RxLCD, TxLCD);
 
-#define myubrr (16000000L/16/250000-1)
-
-int DMXchannel=1;
 int full_dmx_channel=0;
 unsigned char dmx_data[50];
 int readPot1;
@@ -30,14 +27,16 @@ int readPot6;
 /*************************************************************/
 void setup()
 {
+  // DMX Setup
   pinMode(TxDMX, OUTPUT);
-  pinMode(TxLCD, OUTPUT);
+  Serial.begin(250000, SERIAL_8N2); //For DMX out
+  
+  // LCD Setup
+    pinMode(TxLCD, OUTPUT);
   digitalWrite(TxLCD, HIGH);
   delay (100);
   softserial.begin(9600); // for LCD
-  Serial.begin(250000, SERIAL_8N2); //For DMX out
   delay (100);
-  //noInterrupts();
   softserial.write(22); // turn on LCD, No Cursor
   softserial.write(17); // turn on back light
   delay (50);
@@ -59,7 +58,7 @@ void loop()
     pinMode(TxDMX, OUTPUT);
     digitalWrite(TxDMX,LOW); // Low = Break
     delayMicroseconds(120);
-    digitalWrite(1,HIGH);
+    digitalWrite(1,HIGH); // Back to High before giving control back to USART
     UCSR0B = UCSR0B | 0x08; // Enable USART Transmit
     Serial.write(0x00);
    }
