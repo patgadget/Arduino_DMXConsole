@@ -52,22 +52,26 @@ void setup()
 /*************************************************************/
 void loop()
 {
-  if (full_dmx_channel == 0) //Make a break in serial
+  if (full_dmx_channel == 0) //First then Make a break in serial
   {
+    /* To Reset the Sequence in a DMX Protocole, a Break is Send to tell all the
+     *  receiver that this is the starting point.
+     *  https://en.wikipedia.org/wiki/DMX512#Protocol
+     */
     UCSR0B = UCSR0B & ~0x08; // Disable USART Transmit
-    pinMode(TxDMX, OUTPUT);
+    //pinMode(TxDMX, OUTPUT);
     digitalWrite(TxDMX,LOW); // Low = Break
     delayMicroseconds(120);
     digitalWrite(1,HIGH); // Back to High before giving control back to USART
     UCSR0B = UCSR0B | 0x08; // Enable USART Transmit
-    Serial.write(0x00);
+    Serial.write(0x00); // Start Code 0x00 is standart for light
    }
   if (full_dmx_channel>0) //Not a break then write the DMX Channel
     {
-    Serial.write(readPot1/4);
+    Serial.write(dmx_data[full_dmx_channel]);
     }
   full_dmx_channel++;
-  if (full_dmx_channel>5)
+  if (full_dmx_channel>7)
     {
     full_dmx_channel = 0;
     readPot1=analogRead(0);
@@ -76,5 +80,11 @@ void loop()
     readPot4=analogRead(3);
     readPot5=analogRead(4);
     readPot6=analogRead(5);
+    dmx_data[1]=readPot1/4;
+    dmx_data[2]=readPot2/4;
+    dmx_data[3]=readPot3/4;
+    dmx_data[4]=readPot4/4;
+    dmx_data[5]=readPot5/4;
+    dmx_data[6]=readPot6/4;
   }
 }
