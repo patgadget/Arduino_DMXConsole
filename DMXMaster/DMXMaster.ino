@@ -18,24 +18,24 @@ SoftwareSerial softserial(RxLCD, TxLCD);
 #define myubrr (16000000L/16/250000-1)
 
 
-int tempStateIn=0;
-int lastState = 0;              //last state of led
+//int tempStateIn=0;
+//int lastState = 0;              //last state of led
 //int EncValue = 0;
 //int EncPulse = 3;             //0 = Nothing, 1= Forward, 2= reverse, 3= redraw
 //int EncDivider = 10;
 //int EncDividerCountUP = 0;
 //int EncDividerCountDW = 0;
-int TopScreen =0;
-int OldTopScreen=0;
-int MenuIndex=1;
+//int TopScreen =0;
+//int OldTopScreen=0;
+//int MenuIndex=1;
 int DMXchannel=1;
-int DMXintensity=1;
-int FixtureNO=1;
-int SequenceNO;
-int SceneNO=1;
-int ProgramNO=0;
-int delayEntreSeq=500;
-int contDelay;
+//int DMXintensity=1;
+//int FixtureNO=1;
+//int SequenceNO;
+//int SceneNO=1;
+//int ProgramNO=0;
+//int delayEntreSeq=500;
+//int contDelay;
 int sequence1[15] = {5,6,7,1,7,2,10,3,7,3,10,5,6,0};
 int indexSeq=0;
 int full_dmx_channel=0;
