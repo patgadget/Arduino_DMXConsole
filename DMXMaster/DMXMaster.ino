@@ -100,15 +100,11 @@ void loop()
     UCSR0B = UCSR0B | 0x08; // Enable USART Transmit
     Serial.write(0x00);
    }
-  if (full_dmx_channel > 0) //Not a break then write the DMX Channel
+  if (full_dmx_channel > 1) //Not a break then write the DMX Channel
     {
-    Serial.write(dmx_data[full_dmx_channel]);
-    //Serial.write(analogRead(0)/4);
+    Serial.write(analogRead(0)/4);
     }
   full_dmx_channel++;
-
-  // At the End of the DMX Transmission
-  // Refresh the Memory
   if (full_dmx_channel>5)
     {
     full_dmx_channel = 0;
@@ -116,10 +112,8 @@ void loop()
     readPot2=analogRead(1);
     readPot3=analogRead(2);
     readPot4=analogRead(3);
-    dmx_data[1]=readPot1/4;
-    dmx_data[2]=readPot2/4;
-    dmx_data[3]=readPot3/4;
-    dmx_data[4]=readPot4/4;
+    readPot5=analogRead(4);
+    readPot6=analogRead(5);
   }
 }
 
