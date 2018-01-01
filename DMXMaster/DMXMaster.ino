@@ -75,33 +75,16 @@ void setup()
   delay (50);
   softserial.write(12); // Clear Screen
   softserial.print(" DMX Console Master ");
-  UCSR0A &= (~0x02); // Cancelling Doubling Bit
 
-  if ( UCSR0A & 0x02)
-    softserial.print("Doubling ON");
-  else
-    softserial.print("NO Doubling");
   
-  
-  delay (500);
+  //delay (500);
 
   //  To Change speed to 250Kb and 2 stop bit\
-
+  UCSR0A &= (~0x02); // Cancelling Doubling Bit
   UBRR0H = (unsigned char)(myubrr>>8); //High part, only bit 0-3
   UBRR0L = (unsigned char)myubrr; //Low part
-  //UCSR0B |= ((1<<RXEN0)|(1<<RXCIE0));//Enable Receiver and Interrupt RX
-  
-  
   UCSR0C |= ((3<<UCSZ00)|(1<<USBS0)); //N81 No parity/8 bits/2 Stop bit
-
-  
-  //UBRR0L = 3;
-  //UCSR0C = UCSR0C | 0x08;
   }
-
-
-
-
 
 
 /*************************************************************/
