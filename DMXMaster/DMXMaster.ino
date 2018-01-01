@@ -36,17 +36,17 @@ int DMXchannel=1;
 //int ProgramNO=0;
 //int delayEntreSeq=500;
 //int contDelay;
-int sequence1[15] = {5,6,7,1,7,2,10,3,7,3,10,5,6,0};
-int indexSeq=0;
+//int sequence1[15] = {5,6,7,1,7,2,10,3,7,3,10,5,6,0};
+//int indexSeq=0;
 int full_dmx_channel=0;
 int ModeNo=0; // 1 = DMX channel debug, 2= Fixture Mode, 3= Scene Mode, 4= Program Mode, 5 = ALL ON, 6 = ALL Off, 7 = Sequence mode
-unsigned char randomDmx1Value=0;
-unsigned char randomDmx2Value=0;
-char randomDmx3Value=0;
-int tempProgValue1;
-int tempProgValue2;
-int tempProgValue3;
-long tempProgValueLong;
+//unsigned char randomDmx1Value=0;
+//unsigned char randomDmx2Value=0;
+//char randomDmx3Value=0;
+//int tempProgValue1;
+//int tempProgValue2;
+//int tempProgValue3;
+//long tempProgValueLong;
 unsigned char dmx_data[50];
 int readPot1;
 int readPot2;
@@ -85,10 +85,10 @@ void setup()
   softserial.print(" DMX Console Master ");
   UCSR0A &= (~0x02); // Cancelling Doubling Bit
 
-  if ( UCSR0A & 0x02)
-    softserial.print("Doubling ON");
-  else
-    softserial.print("NO Doubling");
+  //if ( UCSR0A & 0x02)
+  //  softserial.print("Doubling ON");
+  //else
+  //  softserial.print("NO Doubling");
   
   
   delay (500);
