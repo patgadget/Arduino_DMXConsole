@@ -20,11 +20,11 @@ SoftwareSerial softserial(RxLCD, TxLCD);
 
 int tempStateIn=0;
 int lastState = 0;              //last state of led
-int EncValue = 0;
-int EncPulse = 3;             //0 = Nothing, 1= Forward, 2= reverse, 3= redraw
-int EncDivider = 10;
-int EncDividerCountUP = 0;
-int EncDividerCountDW = 0;
+//int EncValue = 0;
+//int EncPulse = 3;             //0 = Nothing, 1= Forward, 2= reverse, 3= redraw
+//int EncDivider = 10;
+//int EncDividerCountUP = 0;
+//int EncDividerCountDW = 0;
 int TopScreen =0;
 int OldTopScreen=0;
 int MenuIndex=1;
@@ -55,11 +55,11 @@ int readPot4;
 int readPot5;
 int readPot6;
 
-int Choix;
-int TapAvg[10];
-int ReadTimeTap;
-int TapSyncTime;
-int LastTapSyncTime;
+//int Choix;
+//int TapAvg[10];
+//int ReadTimeTap;
+//int TapSyncTime;
+//int LastTapSyncTime;
 
 
 
