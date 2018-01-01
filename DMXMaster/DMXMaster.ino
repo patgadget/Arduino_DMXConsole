@@ -1,18 +1,10 @@
 // My DMX Console Have a Duemilanove (set Arduino before Transfert)
 #include <SoftwareSerial.h>
 
-// DMX Console
-// Analogue (5) Joystick X
-// Analogue (4) Joystick Y
-// Analogue (3) Pot #4
-// Analogue (2) Pot #3
-// Analogue (1) Pot #2
-// Analogue (0) Pot #1
-
-
 #define RxLCD 6
 #define TxLCD 5
-#define ledPin 13                // choose the pin for the LED
+//#define ledPin 13                // choose the pin for the LED
+#define TxDMX 1
 SoftwareSerial softserial(RxLCD, TxLCD);
 
 #define myubrr (16000000L/16/250000-1)
@@ -69,7 +61,7 @@ int LastTapSyncTime;
 void setup()
 {
   pinMode(1, OUTPUT);
-  pinMode(ledPin, OUTPUT);      // declare LED as output
+  //pinMode(ledPin, OUTPUT);      // declare LED as output
   pinMode(TxLCD, OUTPUT);
 
   digitalWrite(TxLCD, HIGH);
