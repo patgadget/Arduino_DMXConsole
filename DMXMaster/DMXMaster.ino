@@ -1,10 +1,18 @@
 // My DMX Console Have a Duemilanove (set Arduino before Transfert)
 #include <SoftwareSerial.h>
 
+// DMX Console
+// Analogue (5) Joystick X
+// Analogue (4) Joystick Y
+// Analogue (3) Pot #4
+// Analogue (2) Pot #3
+// Analogue (1) Pot #2
+// Analogue (0) Pot #1
+
+
 #define RxLCD 6
 #define TxLCD 5
-//#define ledPin 13                // choose the pin for the LED
-#define TxDMX 1
+#define ledPin 13                // choose the pin for the LED
 SoftwareSerial softserial(RxLCD, TxLCD);
 
 #define myubrr (16000000L/16/250000-1)
@@ -61,7 +69,7 @@ int LastTapSyncTime;
 void setup()
 {
   pinMode(1, OUTPUT);
-  //pinMode(ledPin, OUTPUT);      // declare LED as output
+  pinMode(ledPin, OUTPUT);      // declare LED as output
   pinMode(TxLCD, OUTPUT);
 
   digitalWrite(TxLCD, HIGH);
@@ -75,16 +83,32 @@ void setup()
   delay (50);
   softserial.write(12); // Clear Screen
   softserial.print(" DMX Console Master ");
+  UCSR0A &= (~0x02); // Cancelling Doubling Bit
 
+  if ( UCSR0A & 0x02)
+    softserial.print("Doubling ON");
+  else
+    softserial.print("NO Doubling");
   
-  //delay (500);
+  
+  delay (500);
 
   //  To Change speed to 250Kb and 2 stop bit\
-  UCSR0A &= (~0x02); // Cancelling Doubling Bit
   UBRR0H = (unsigned char)(myubrr>>8); //High part, only bit 0-3
   UBRR0L = (unsigned char)myubrr; //Low part
+  //UCSR0B |= ((1<<RXEN0)|(1<<RXCIE0));//Enable Receiver and Interrupt RX
+  
+  
   UCSR0C |= ((3<<UCSZ00)|(1<<USBS0)); //N81 No parity/8 bits/2 Stop bit
+
+  
+  //UBRR0L = 3;
+  //UCSR0C = UCSR0C | 0x08;
   }
+
+
+
+
 
 
 /*************************************************************/
@@ -93,16 +117,23 @@ void loop()
   if (full_dmx_channel == 0) //Make a break in serial
   {
     UCSR0B = UCSR0B & ~0x08; // Disable USART Transmit
+    //delayMicroseconds(120);
     pinMode(1, OUTPUT);
+    //digitalWrite(1,HIGH);
+    //delayMicroseconds(120);
     digitalWrite(1,LOW); // Low = Break
     delayMicroseconds(120);
     digitalWrite(1,HIGH);
     UCSR0B = UCSR0B | 0x08; // Enable USART Transmit
     Serial.write(0x00);
    }
-  if (full_dmx_channel > 1) //Not a break then write the DMX Channel
+  if (full_dmx_channel>0) //Not a break then write the DMX Channel
+  //if (full_dmx_channel == 1) //Not a break then write the DMX Channel
     {
-    Serial.write(analogRead(0)/4);
+    Serial.write(readPot1/4);
+    //Serial.write(0x0F);
+    //Serial.write(0x00);
+    //Serial.write(0xFF);
     }
   full_dmx_channel++;
   if (full_dmx_channel>5)
@@ -116,5 +147,3 @@ void loop()
     readPot6=analogRead(5);
   }
 }
-
-
