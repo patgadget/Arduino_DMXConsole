@@ -18,7 +18,6 @@ SoftwareSerial softserial(RxLCD, TxLCD);
 
 int DMXchannel=1;
 int full_dmx_channel=0;
-int ModeNo=0; // 1 = DMX channel debug, 2= Fixture Mode, 3= Scene Mode, 4= Program Mode, 5 = ALL ON, 6 = ALL Off, 7 = Sequence mode
 unsigned char dmx_data[50];
 int readPot1;
 int readPot2;
@@ -57,7 +56,6 @@ void loop()
   if (full_dmx_channel == 0) //Make a break in serial
   {
     UCSR0B = UCSR0B & ~0x08; // Disable USART Transmit
-    //delayMicroseconds(120);
     pinMode(TxDMX, OUTPUT);
     digitalWrite(TxDMX,LOW); // Low = Break
     delayMicroseconds(120);
